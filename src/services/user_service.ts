@@ -21,7 +21,6 @@ export class UserServiceImpl implements UserService {
     delegatorRepository: Repository<Delegator> = AppDataSource.getRepository(Delegator);
     orderRepository: Repository<Order> = AppDataSource.getRepository(Order);
     storeRepository: Repository<Store> = AppDataSource.getRepository(Store);
-    reviewRepository: Repository<Review> = AppDataSource.getRepository(Review);
 
     public registerUser = async (req: Request, res: Response, next: NextFunction) => {
 
