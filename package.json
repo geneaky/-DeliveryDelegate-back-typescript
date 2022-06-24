@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon dist/socket.js",
     "build": "tsc -p .",
-    "dev": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/socket.ts"
+    "dev": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts"
   },
   "dependencies": {
     "@google-cloud/vision": "^2.4.2",

@@ -10,10 +10,6 @@ import {Auth} from "./middlewares/auth";
 const logger = require('morgan');
 const dotenv = require('dotenv');
 const {sequelize} = require('./models');
-const usersRouter = require('./controllers/users');
-const reviewRouter = require('./controllers/review');
-const storeRouter = require('./controllers/store');
-const mapRouter = require('./controllers/map');
 
 
 dotenv.config();
