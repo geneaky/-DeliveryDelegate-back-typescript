@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
+import {jwtConfig} from "../config/jwt.config";
+import * as jwt from 'jsonwebtoken';
 const randToken = require('rand-token');
-const {secretKey, option} = require('../config/jwt.config');
-const TOKEN_EXPIRED = -3;
-const TOKEN_INVALID = -2;
+const TOKEN_EXPIRED: number = -3;
+const TOKEN_INVALID: number = -2;
 
 const sign = async (user) => {
 
@@ -11,7 +11,7 @@ const sign = async (user) => {
     };
 
     const result = {
-        token : jwt.sign(payload, secretKey, option),
+        token : jwt.sign(payload, jwtConfig.secretKey, jwtConfig.option),
         refreshToken: randToken.uid(256)
     }
 
@@ -21,7 +21,7 @@ const sign = async (user) => {
 const verify = async (token) => {
     let decoded;
     try {
-      decoded = await jwt.verify(token, secretKey, option);
+      decoded = await jwt.verify(token, jwtConfig.secretKey, jwtConfig.option);
     } catch (err) {
         if (err.message === 'jwt expired') {
             console.log('expired token');

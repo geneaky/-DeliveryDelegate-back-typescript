@@ -1,7 +1,7 @@
 const jwt = require('./jwt');
 const httpError = require("http-errors");
-const TOKEN_EXPIRED = -3;
-const TOKEN_INVALID = -2;
+const TOKEN_EXPIRED: number = -3;
+const TOKEN_INVALID: number = -2;
 
 const authenticate = async (req, res, next) => {
     let jwtToken = req.header('token');

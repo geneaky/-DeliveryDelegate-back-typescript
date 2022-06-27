@@ -24,8 +24,8 @@ export class MapController implements Controller {
     }
 
     private initializeRoutes() {
-        router.get('/search/place',authenticate, async(req, res, next) => {
-            const place = encodeURI(req.query.name)
+        this.router.get('/search/place', async(req, res, next) => {
+            const place = encodeURI(req.query.name as string)
             await this.naverMap.get(`local.json?query=${place}&display=5`)
                 .then((result) => {
                     return res.json({result : result.data.items})

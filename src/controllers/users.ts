@@ -2,7 +2,6 @@ import {Controller} from "../utils/base-types";
 import * as express from 'express'
 import {UserService} from "../services/service-type/user.service-type";
 import {UserServiceImpl} from "../services/user_service";
-const authenticate = require('../middlewares/auth')
 
 export class UserController implements Controller{
   public path: string = "/user"
@@ -14,19 +13,19 @@ export class UserController implements Controller{
   }
 
   private initializeRoutes() {
-    router.post('/register/existed', (req, res, next) => {
+    this.router.post('/register/existed', (req, res, next) => {
       this.userService.checkDuplicatePhoneNumber(req, res, next)
     })
 
-    router.post('/register', (req, res,next) => {
+    this.router.post('/register', (req, res,next) => {
       this.userService.registerUser(req, res, next)
     })
 
-    router.post('/login', (req, res, next) => {
+    this.router.post('/login', (req, res, next) => {
       this.userService.login(req, res, next)
     })
 
-    router.post('/town', authenticate ,(req, res, next) => {
+    this.router.post('/town',(req, res, next) => {
       this.userService.setUserTown(req, res, next)
     })
 

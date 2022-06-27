@@ -14,11 +14,11 @@ export class GameController implements Controller {
     }
 
     private initializeRoutes() {
-        router.post('/register', (req, res, next) => {
+        this.router.post('/register', (req, res, next) => {
             this.gameService.createGame(req, res, next);
         });
 
-        router.get('/rooms', (req, res, next) => {
+        this.router.get('/rooms', (req, res, next) => {
             this.gameService.findGames(req, res, next);
         });
     }

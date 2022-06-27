@@ -14,15 +14,15 @@ export class StoreController implements Controller {
 
 
     private initializeRoutes() {
-        router.get('/',authenticate,(req,res,next) => {
+        this.router.get('/',(req,res,next) => {
             this.storeService.findStore(req, res, next);
         });
 
-        router.post('/register',authenticate, (req, res, next) => {
+        this.router.post('/register', (req, res, next) => {
             this.storeService.registerStore(req, res, next);
         });
 
-        router.get('/:id/reviews',authenticate, (req, res, next) => {
+        this.router.get('/:id/reviews', (req, res, next) => {
             this.storeService.getReviews(req, res, next);
         })
     }
