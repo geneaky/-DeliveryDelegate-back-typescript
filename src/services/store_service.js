@@ -1,5 +1,5 @@
 const httpError = require('http-errors');
-const jwt = require('../api/middlewares/jwt');
+const jwt = require('../middlewares/jwt');
 const {Store, Review} = require('../models');
 
 const findStore = async (req, res, next) => {

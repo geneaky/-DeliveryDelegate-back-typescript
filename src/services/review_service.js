@@ -1,6 +1,6 @@
 const path = require('path');
 require('dotenv').config({ path: __dirname + '/develop.env' });
-const jwt = require('../api/middlewares/jwt');
+const jwt = require('../middlewares/jwt');
 const { Review,User,Thumb,Store } = require('../models');
 const Sequelize = require('sequelize');
 const vision = require('@google-cloud/vision');

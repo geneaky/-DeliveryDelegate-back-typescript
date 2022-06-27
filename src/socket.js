@@ -1,7 +1,7 @@
 const app = require('./app');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
-const jwt = require('./api/middlewares/jwt');
+const jwt = require('./middlewares/jwt');
 const {User, Delegator, Order, Game} = require('./models');
 const fs = require('fs');
 

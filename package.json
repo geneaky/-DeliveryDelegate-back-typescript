@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon socket.js"
+    "start": "nodemon dist/socket.js",
+    "build": "tsc -p .",
+    "dev": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/socket.ts"
   },
   "dependencies": {
     "@google-cloud/vision": "^2.4.2",
@@ -20,7 +22,12 @@
     "rand-token": "^1.0.1",
     "sequelize": "^6.19.0",
     "socket.io": "^4.5.1",
+    "ts-node": "^10.8.1",
     "typescript": "^4.7.4",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^18.0.0"
   }
 }

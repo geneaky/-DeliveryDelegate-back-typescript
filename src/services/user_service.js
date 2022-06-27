@@ -1,5 +1,5 @@
 const httpError = require('http-errors');
-const jwt = require('../api/middlewares/jwt');
+const jwt = require('../middlewares/jwt');
 const {User} = require('../models');
 const crypto = require('crypto');
 

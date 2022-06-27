@@ -1,5 +1,5 @@
 const express = require('express');
-const reviewService = require('../../services/review_service');
+const reviewService = require('../services/review_service');
 const router = express.Router();
 const multer = require('multer');
 const storage = multer.diskStorage({

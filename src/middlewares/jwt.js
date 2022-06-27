@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const randToken = require('rand-token');
-const {secretKey, option} = require('../../config/jwt.config');
+const {secretKey, option} = require('../config/jwt.config');
 const TOKEN_EXPIRED = -3;
 const TOKEN_INVALID = -2;
 

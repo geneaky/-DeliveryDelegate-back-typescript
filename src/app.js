@@ -1,19 +1,17 @@
 const express = require('express');
 const logger = require('morgan');
 const dotenv = require('dotenv');
-const authenticate = require('./api/middlewares/auth');
+const authenticate = require('./middlewares/auth');
 const {sequelize} = require('./models');
-const usersRouter = require('./api/routes/users');
-const reviewRouter = require('./api/routes/review');
-const storeRouter = require('./api/routes/store');
-const mapRouter = require('./api/routes/map');
+const usersRouter = require('./controllers/users');
+const reviewRouter = require('./controllers/review');
+const storeRouter = require('./controllers/store');
+const mapRouter = require('./controllers/map');
 const fs = require('fs');
 
 
 dotenv.config();
-
 const app = express();
-
 
 sequelize.sync({force:false})
     .then(() => {
