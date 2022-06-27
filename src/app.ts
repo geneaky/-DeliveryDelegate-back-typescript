@@ -6,6 +6,7 @@ import {MapController} from "./controllers/map";
 import {StoreController} from "./controllers/store";
 import {UserController} from "./controllers/users";
 import {ReviewController} from "./controllers/review";
+import {Auth} from "./middlewares/auth";
 const logger = require('morgan');
 const dotenv = require('dotenv');
 const {sequelize} = require('./models');
@@ -56,7 +57,7 @@ export class App {
 
     private initializeControllers(controllers: Controller[]) {
         controllers.forEach((controller) => {
-            this.app.use("/",authenticate, controller.router)
+            this.app.use("/",new Auth().authenticate, controller.router)
         })
     }
 
@@ -72,11 +73,5 @@ export class App {
         this.app.use(express.json());
     }
 }
-
-// app.use('/users', usersRouter);
-// app.use('/store',authenticate, storeRouter);
-// app.use('/review',authenticate, reviewRouter);
-// app.use('/map',authenticate, mapRouter);
-
 
 new App([new GameController(), new MapController(), new StoreController(), new UserController(), new ReviewController()], 3000);
