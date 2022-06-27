@@ -1,6 +1,8 @@
-const express = require('express');
-const reviewService = require('../services/review_service');
-const router = express.Router();
+import {Controller} from "../utils/base-types"
+import * as express from 'express'
+import {ReviewServiceImpl} from "../services/review_service";
+import {ReviewService} from "../services/service-type/review.service-type";
+
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination:  (req, file, cb) => {
@@ -13,19 +15,28 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }); 
 
-router.post('/post', async function(req, res, next) {
-    reviewService.writwReview(req, res, next);
-});
+export class ReviewController implements Controller {
+    public path: string = "/review";
+    public router: express.Router = express.Router();
+    private reviewService: ReviewService = new ReviewServiceImpl();
 
-router.post('/reciept',  upload.single('file'), function(req, res, next) { //
-    reviewService.recieptAuth(req, res, next);
-});
+    constructor() {
+        this.initializeRoutes()
+    }
+
+    private initializeRoutes() {
+        this.router.post('/post', async function(req, res, next) {
+            this.reviewService.writwReview(req, res, next);
+        });
+
+        this.router.post('/reciept',  upload.single('file'), function(req, res, next) { //
+            this.reviewService.recieptAuth(req, res, next);
+        });
 
 
-router.get('/thumb', async function(req, res, next) {
-    reviewService.thumbUp(req, res, next);
-});
+        this.router.get('/thumb', async function(req, res, next) {
+            this.reviewService.thumbUp(req, res, next);
+        });
 
-
-
-module.exports = router;
+    }
+}

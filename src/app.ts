@@ -5,6 +5,7 @@ import {Sequelize} from "sequelize";
 import {MapController} from "./controllers/map";
 import {StoreController} from "./controllers/store";
 import {UserController} from "./controllers/users";
+import {ReviewController} from "./controllers/review";
 const logger = require('morgan');
 const dotenv = require('dotenv');
 const {sequelize} = require('./models');
@@ -78,4 +79,4 @@ export class App {
 // app.use('/map',authenticate, mapRouter);
 
 
-new App([new GameController(), new MapController(), new StoreController(), new UserController()], 3000);
+new App([new GameController(), new MapController(), new StoreController(), new UserController(), new ReviewController()], 3000);
