@@ -4,6 +4,7 @@ import {GameController} from "./controllers/game";
 import {Sequelize} from "sequelize";
 import {MapController} from "./controllers/map";
 import {StoreController} from "./controllers/store";
+import {UserController} from "./controllers/users";
 const logger = require('morgan');
 const dotenv = require('dotenv');
 const {sequelize} = require('./models');
@@ -66,7 +67,6 @@ export class App {
 
 
     private initializeMiddlewares() {
-        this.app.use(express.static('public'));
         this.app.use(logger('dev'));
         this.app.use(express.json());
     }
@@ -78,4 +78,4 @@ export class App {
 // app.use('/map',authenticate, mapRouter);
 
 
-new App([new GameController(), new MapController(), new StoreController()], 3000);
+new App([new GameController(), new MapController(), new StoreController(), new UserController()], 3000);

@@ -1,5 +1,5 @@
 import {StoreService} from "./service-type/store.service-type";
-import httpError from 'http-errors'
+import * as httpError from 'http-errors'
 const {Store, Review} = require('../models');
 
 export class StoreServiceImpl implements StoreService {
