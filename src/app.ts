@@ -2,9 +2,10 @@ import * as express from 'express';
 import {Controller} from "./utils/base-types";
 import {GameController} from "./controllers/game";
 import {Sequelize} from "sequelize";
+import {MapController} from "./controllers/map";
+import {StoreController} from "./controllers/store";
 const logger = require('morgan');
 const dotenv = require('dotenv');
-const authenticate = require('./middlewares/auth');
 const {sequelize} = require('./models');
 const usersRouter = require('./controllers/users');
 const reviewRouter = require('./controllers/review');
@@ -77,4 +78,4 @@ export class App {
 // app.use('/map',authenticate, mapRouter);
 
 
-new App([new GameController()], 3000);
+new App([new GameController(), new MapController(), new StoreController()], 3000);
