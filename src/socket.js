@@ -12,7 +12,6 @@ const gameSocketNameSpace = io.of('/game');
 
 gameSocketNameSpace.on('connection', (socket) => {
 
-    //게임 참석
     socket.on('attend',async ({token,game_id,room_name, size,order}) => {
         const user = await jwt.verify(token);
 
@@ -47,7 +46,6 @@ gameSocketNameSpace.on('connection', (socket) => {
         socket.to(room_name).emit('attend', socket.id+'입장');
     });
 
-    //안드로이드 게임 결과 전송
     socket.on('game_result',async ({token,game_id,room_name,nickname,ranking}, next) => {
         const user = await jwt.verify(token);
 
@@ -86,7 +84,6 @@ gameSocketNameSpace.on('connection', (socket) => {
         socket.broadcast.to(room_name).emit('delegator_run_away', '대표자가 탈주했습니다');
     });
 
-    //대표자 다시 선정 -> 안드로이드에서 탈주 알림 받은 후 -> '대표자 다시 선정' 이벤트 호출
     socket.on('delegator_re_ranking', async({token,game_id,room_name,nickname,ranking}, next) => {
         const user = await jwt.verify(token);
 
@@ -113,17 +110,14 @@ gameSocketNameSpace.on('connection', (socket) => {
         }
     });
 
-    //대표자 랜드마크 도착 -> 안드로이드에서 대표자가 랜드마크에 도착하면 해당 이벤트를 참여자들에게 알림
     socket.on('delegator_arrive', ({token,game_id,room_name, }) => {
         socket.broadcast.to(room_name).emit('delegator_arrive', '대표자가 랜드마크에 도착했습니다');
     });
 
-    //게임 종료
     socket.on('game_end',(socket) => {
         socket.disconnect();
     });
 
-    //게임 종료 후 게임 삭제 (대표자가 삭제) --> 게임 생성하자마자 삭제하는 경우도 있음
     socket.on('game_remove', async({room_name,ranking},next) => {
         if(ranking === 1) {
             await Delegator.delete({
