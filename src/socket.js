@@ -68,10 +68,6 @@ gameSocketNameSpace.on('connection', (socket) => {
         }
     });
 
-    //대표자 참석 확인 << 이건 안드로이드에서 일정 시간 내에 <확인> 버튼 안누르면 '대표자 탈주' 이벤트 호출
-    //대표자 어플 강제 종료시 << 안드로이드에서 어플 종료 이벤트 발생시 '대표자 탈주' 이벤트 호출하고
-
-    //대표자 탈주 -> 게임에서 탈주자 제거 -> 탈주 알림
     socket.on('delegator_run_away', async(socket,{token,game_id,room_name,nickname,ranking}, next) => {
         const user = await jwt.verify(token);
         const user_id = user.id;
