@@ -1,11 +1,14 @@
 import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
-export class Delegator {
+export class Thumb {
 
     @PrimaryGeneratedColumn()
-    delegator_id: number
+    thumb_id: number
 
     @Column()
-    ranking: number
+    thumb_up: boolean
+
+    @Column()
+    thumb_down: boolean
 }

@@ -1,11 +1,11 @@
 import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
-export class Delegator {
+export class Review {
 
     @PrimaryGeneratedColumn()
-    delegator_id: number
+    review_id: number
 
     @Column()
-    ranking: number
+    content: string
 }
