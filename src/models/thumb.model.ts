@@ -1,4 +1,6 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {User} from "./user.model";
+import {Review} from "./review.model";
 
 @Entity()
 export class Thumb {
@@ -11,4 +13,12 @@ export class Thumb {
 
     @Column()
     thumb_down: boolean
+
+    @ManyToOne(() => User, (user) => user.thumb)
+    @JoinColumn()
+    user: User
+
+    @ManyToOne(() => Review, (review) => review.thumb)
+    @JoinColumn()
+    review: Review
 }

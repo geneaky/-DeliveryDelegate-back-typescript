@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Delegator} from "./delegator.model";
 
 @Entity()
 export class Game {
@@ -24,4 +25,6 @@ export class Game {
     @Column()
     socket_room_name: string
 
+    @OneToMany(() => Delegator,(delegator) => delegator.game)
+    delegator: Delegator[]
 }

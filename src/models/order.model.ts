@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Delegator} from "./delegator.model";
 
 @Entity()
 export class Order {
@@ -17,4 +18,9 @@ export class Order {
 
     @Column()
     detail: string
+
+    @ManyToOne(() => Delegator,(delegator) => delegator.order)
+    @JoinColumn()
+    delegator: Delegator
+
 }

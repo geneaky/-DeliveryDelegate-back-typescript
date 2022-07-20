@@ -3,7 +3,6 @@ import * as express from 'express';
 import axios, {Axios} from 'axios';
 import httpError from 'http-errors';
 import * as dotenv from 'dotenv'
-import authenticate from '../middlewares/auth'
 
 dotenv.config();
 

@@ -1,25 +1,23 @@
-import * as express from 'express';
+import express, {Express, NextFunction, Request, Response} from 'express';
 import {Controller} from "./utils/base-types";
 import {GameController} from "./controllers/game";
-import {Sequelize} from "sequelize";
 import {MapController} from "./controllers/map";
 import {StoreController} from "./controllers/store";
 import {UserController} from "./controllers/users";
 import {Auth} from "./middlewares/auth";
-const logger = require('morgan');
-const dotenv = require('dotenv');
-const {sequelize} = require('./models');
+import {AppDataSource} from "./config/data-source";
+import * as logger from "morgan"
+import * as dotenv from 'dotenv'
 
 
 dotenv.config();
 
 export class App {
-    public app: express.Application
+    public app : Express;
     public port: number
-    private sequelize: Sequelize = sequelize
 
     constructor(controllers: Controller[], port: number) {
-        this.app = express()
+        this.app = express();
         this.port = port
 
         this.initializeMiddlewares();
@@ -40,14 +38,12 @@ export class App {
 
 
     private connectToDatabase() {
-
-        this.sequelize.sync({force:false})
+        AppDataSource.initialize()
             .then(() => {
-                console.log('success connecting database')
-            })
-            .catch((err) => {
-                console.log('fail connecting database > ',err)
-            })
+                console.log('db connected')
+            }).catch((error) => {
+            console.log(error)
+        })
     }
 
     private initializeControllers(controllers: Controller[]) {
@@ -57,16 +53,16 @@ export class App {
     }
 
     private initializeErrorHandling() {
-        this.app.use((err, req, res, next) => {
+        this.app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
             console.log(err.message)
-            res.status(err.status|| 500).send(err.message)
+            res.status(500).send(err.message)
     })}
 
 
     private initializeMiddlewares() {
-        this.app.use(logger('dev'));
         this.app.use(express.json());
     }
 }
 
-new App([new GameController(), new MapController(), new StoreController(), new UserController()], 3000).listen();
+//new App([new GameController(), new MapController(), new StoreController(), new UserController()], 3000).listen();
+new App([new UserController()], 3000).listen();

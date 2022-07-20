@@ -1,30 +1,41 @@
 import {GameService} from './service-type/game.service-type'
-const jwt = require('../middlewares/jwt');
-const { v4 } = require('uuid');
-const { Game, Delegator} = require('../models');
+import {Repository} from "typeorm";
+import {Game} from "../models/game.model";
+import {AppDataSource} from "../config/data-source";
+import {Delegator} from "../models/delegator.model";
+import { Jwt } from "../middlewares/jwt";
+import { v4 } from "uuid";
 
 export class GameServiceImpl implements GameService{
 
-    createGame = async (req, res, next) => {
-        const user = await jwt.verify(req.header('token'))
+    gameRepository: Repository<Game> = AppDataSource.getRepository(Game)
+    delegatorRepository: Repository<Delegator> = AppDataSource.getRepository(Delegator)
+    jwt = new Jwt();
+
+    public createGame = async (req, res, next) => {
+        const user = await this.jwt.verify(req.header('token'))
 
         const room_name = v4()
 
-        const game = await Game.create({
+        const game = {
             game_type: req.body.game_type,
             game_name: req.body.game_name,
             population: req.body.population,
             landmark_posx: req.body.landmark_posx,
             landmark_posy: req.body.landmark_posy,
             socket_room_name: room_name
-        }).catch((err) => {
-            return next(err)
+        };
+
+        const savedGame: Game = await this.gameRepository.save(game).catch((err) => {
+            return next(err);
         })
 
-        const delegator = await Delegator.create({
-            game_id: game.game_id,
-            user_id: user.id
-        }).catch((err) => {
+        const delegator = {
+            game: savedGame,
+            user: user
+        }
+
+        this.delegatorRepository.save(delegator).catch((err) => {
             return next(err)
         })
 
@@ -34,9 +45,9 @@ export class GameServiceImpl implements GameService{
         })
     }
 
-    findGames = async (req, res, next) => {
+    public findGames = async (req, res, next) => {
 
-        const games = await Game.findAll().catch((err) => {
+        const games = this.gameRepository.find().catch((err) => {
             return next(err)
         })
 

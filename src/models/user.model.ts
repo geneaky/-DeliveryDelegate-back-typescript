@@ -1,4 +1,7 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Thumb} from "./thumb.model";
+import {Delegator} from "./delegator.model";
+import {Review} from "./review.model";
 
 @Entity()
 export class User {
@@ -23,5 +26,14 @@ export class User {
 
     @Column()
     exemption_count: number
+
+    @OneToMany(() => Thumb, (thumb) => thumb.user)
+    thumb: Thumb[]
+
+    @OneToMany(() => Delegator, (delegator) => delegator.user)
+    delegator: Delegator[]
+
+    @OneToMany(() => Review, (review) => review.user)
+    review: Review[]
 
 }
