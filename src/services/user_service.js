@@ -31,9 +31,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserServiceImpl = void 0;
-const httpError = __importStar(require("http-errors"));
+const http_errors_1 = __importDefault(require("http-errors"));
 const crypto = __importStar(require("crypto"));
 const data_source_1 = require("../config/data-source");
 const user_model_1 = require("../models/user.model");
@@ -57,7 +60,7 @@ class UserServiceImpl {
             yield this.userRepository.save(user).then(() => {
                 return res.status(200).json({ message: 'account created' });
             }).catch((err) => {
-                return next(httpError(500, 'Server Error'));
+                return next((0, http_errors_1.default)(500, 'Server Error'));
             });
         });
         this.hashPassword = (password) => {
@@ -80,7 +83,7 @@ class UserServiceImpl {
                     token: jwtToken
                 });
             }
-            return next(httpError(400, 'UnAuthorized User Request'));
+            return next((0, http_errors_1.default)(400, 'UnAuthorized User Request'));
         });
         this.setUserTown = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const jwtToken = req.header('token');
@@ -93,11 +96,11 @@ class UserServiceImpl {
             }).then((user) => {
                 return res.status(200).end();
             }).catch((err) => {
-                return next(httpError(500, 'Server Error'));
+                return next((0, http_errors_1.default)(500, 'Server Error'));
             });
         });
         this.checkDuplicatePhoneNumber = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            let duplicatedUser = this.userRepository.findOneBy({
+            let duplicatedUser = yield this.userRepository.findOneBy({
                 phone_number: req.body.phone_number,
             }).catch((err) => {
                 return next(err);

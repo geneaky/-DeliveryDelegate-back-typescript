@@ -1,8 +1,8 @@
-import * as express from 'express'
+import {Request, Response, NextFunction} from 'express'
 
 export interface UserService {
-    checkDuplicatePhoneNumber: (req: express.Request, res: express.Response, next: express.NextFunction) => void,
-    registerUser: (req: express.Request, res: express.Response, next: express.NextFunction) => void,
-    login: (req: express.Request, res: express.Response, next: express.NextFunction) => void,
-    setUserTown: (req: express.Request, res: express.Response, next: express.NextFunction) => void
+    checkDuplicatePhoneNumber: (req: Request, res: Response, next: NextFunction) => any,
+    registerUser: (req: Request, res: Response, next: NextFunction) => void,
+    login: (req: Request, res: Response, next: NextFunction) => void,
+    setUserTown: (req: Request, res: Response, next: NextFunction) => void
 }

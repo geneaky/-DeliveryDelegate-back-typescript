@@ -6,7 +6,6 @@ import {StoreController} from "./controllers/store";
 import {UserController} from "./controllers/users";
 import {Auth} from "./middlewares/auth";
 import {AppDataSource} from "./config/data-source";
-import * as logger from "morgan"
 import * as dotenv from 'dotenv'
 
 

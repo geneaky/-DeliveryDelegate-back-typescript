@@ -1,5 +1,4 @@
-import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import {JoinColumn} from "typeorm/browser";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, JoinColumn} from "typeorm";
 import {User} from "./user.model";
 import {Game} from "./game.model";
 import {Order} from "./order.model";

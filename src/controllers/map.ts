@@ -1,6 +1,6 @@
 import {Controller} from "../utils/base-types";
 import * as express from 'express';
-import axios, {Axios} from 'axios';
+import axios, {Axios, AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders} from 'axios';
 import httpError from 'http-errors';
 import * as dotenv from 'dotenv'
 
@@ -9,16 +9,18 @@ dotenv.config();
 export class MapController implements Controller {
     path = "/map"
     router = express.Router()
-    naverMap: Axios
+    naverMap: AxiosInstance
+
+    axiosConfig: AxiosRequestConfig = {
+        baseURL : process.env.SEARCH_URL,
+        headers : {
+            'X-Naver-Client-Id' : process.env.NAVER_CLIENT_ID as string,
+            'X-Naver-Client-Secret' : process.env.NAVER_CLIENT_SECRET as string
+        }
+    }
 
     constructor() {
-        this.naverMap = axios.create({
-            baseURL : process.env.SEARCH_URL,
-            headers : {
-                'X-Naver-Client-Id' : process.env.NAVER_CLIENT_ID,
-                'X-Naver-Client-Secret' : process.env.NAVER_CLIENT_SECRET
-            }
-        })
+        this.naverMap = axios.create(this.axiosConfig);
         this.initializeRoutes();
     }
 

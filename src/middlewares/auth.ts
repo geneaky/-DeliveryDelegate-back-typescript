@@ -1,6 +1,6 @@
 import {Jwt} from "./jwt";
 import * as express from 'express';
-import * as httpError from 'http-errors'
+import httpError from 'http-errors';
 const TOKEN_EXPIRED: number = -3;
 const TOKEN_INVALID: number = -2;
 

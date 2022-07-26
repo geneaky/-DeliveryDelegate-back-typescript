@@ -1,21 +1,22 @@
 import {StoreService} from "./service-type/store.service-type";
-import * as httpError from 'http-errors'
+import httpError from 'http-errors';
 import {Repository} from "typeorm";
 import {Store} from "../models/store.model";
 import {AppDataSource} from "../config/data-source";
 import {Review} from "../models/review.model";
+import {NextFunction, Request, Response} from "express";
 
 export class StoreServiceImpl implements StoreService {
 
     storeRepository: Repository<Store> = AppDataSource.getRepository(Store)
     reviewRepository: Repository<Review> = AppDataSource.getRepository(Review)
 
-    public findStore = async (req, res, next) => {
+    public findStore = async (req: Request, res: Response, next: NextFunction) => {
 
         await this.storeRepository.findOneBy({
-            store_name: req.query.store_name,
-            store_posx: req.query.store_posx,
-            store_posy: req.query.store_posy
+            store_name: req.query.store_name as string,
+            store_posx: req.query.store_posx as string,
+            store_posy: req.query.store_posy as string
         }).then((store) => {
             if(store) {
                 return res.status(200).json({store_id: store.store_id, message: "store existed"})
@@ -26,7 +27,7 @@ export class StoreServiceImpl implements StoreService {
         })
     }
 
-    public registerStore = async (req, res, next) => {
+    public registerStore = async (req: Request, res: Response, next: NextFunction) => {
         const store = {
             store_name: req.body.store_name,
             store_posx: req.body.store_posx,
@@ -42,9 +43,9 @@ export class StoreServiceImpl implements StoreService {
         })
     }
 
-    public getReviews = async (req, res, next) => {
+    public getReviews = async (req: Request, res: Response, next: NextFunction) => {
         await this.storeRepository.findOneBy({
-            store_id: req.params.id
+            store_id: parseInt(req.params.id)
         }).then((store) => {
             return res.json({reviews: store.review})
         }).catch((err) => {

@@ -45,13 +45,14 @@ class MapController {
     constructor() {
         this.path = "/map";
         this.router = express.Router();
-        this.naverMap = axios_1.default.create({
+        this.axiosConfig = {
             baseURL: process.env.SEARCH_URL,
             headers: {
                 'X-Naver-Client-Id': process.env.NAVER_CLIENT_ID,
                 'X-Naver-Client-Secret': process.env.NAVER_CLIENT_SECRET
             }
-        });
+        };
+        this.naverMap = axios_1.default.create(this.axiosConfig);
         this.initializeRoutes();
     }
     initializeRoutes() {

@@ -1,11 +1,11 @@
 import {Controller} from "../utils/base-types";
-import * as express from 'express'
 import {UserService} from "../services/service-type/user.service-type";
 import {UserServiceImpl} from "../services/user_service";
+import { Router } from "express";
 
 export class UserController implements Controller{
   public path: string = "/user"
-  public router: express.Router = express.Router()
+  public router: Router = Router()
   private userService: UserService = new UserServiceImpl()
 
   constructor() {

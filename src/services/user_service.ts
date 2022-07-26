@@ -1,16 +1,17 @@
 import {UserService} from "./service-type/user.service-type"
-import * as httpError from 'http-errors'
+import httpError from 'http-errors';
 import * as crypto from "crypto";
 import {AppDataSource} from "../config/data-source";
 import {User} from "../models/user.model";
 import {Repository} from "typeorm";
+import {NextFunction, Request, Response} from "express";
 const jwt = require('../middlewares/jwt');
 
 export class UserServiceImpl implements UserService {
 
     userRepository: Repository<User> = AppDataSource.getRepository(User);
 
-    public registerUser = async (req, res, next) => {
+    public registerUser = async (req: Request, res: Response, next: NextFunction) => {
 
         let existedUser = await this.findUser(req, res, next);
 
@@ -34,11 +35,11 @@ export class UserServiceImpl implements UserService {
         })
     }
 
-    private hashPassword = (password) => {
+    private hashPassword = (password: string) => {
         return crypto.createHash('sha256').update(password).digest('base64');
     }
 
-    private findUser = async (req, res, next) => {
+    private findUser = async (req: Request, res: Response, next: NextFunction) => {
 
         return await this.userRepository.findOneBy({
             phone_number: req.body.phone_number,
@@ -48,7 +49,7 @@ export class UserServiceImpl implements UserService {
         })
     }
 
-    public login = async (req, res, next) => {
+    public login = async (req: Request, res: Response, next: NextFunction) => {
         let authenticatedUser = await this.findUser(req, res, next);
 
         if(authenticatedUser) {
@@ -62,7 +63,7 @@ export class UserServiceImpl implements UserService {
         return next(httpError(400, 'UnAuthorized User Request'));
     }
 
-    public setUserTown = async (req, res, next) => {
+    public setUserTown = async (req: Request, res: Response, next: NextFunction) => {
         const jwtToken = req.header('token')
         const user = await jwt.verify(jwtToken)
 
@@ -78,8 +79,8 @@ export class UserServiceImpl implements UserService {
         })
     }
 
-    public checkDuplicatePhoneNumber = async(req, res, next) => {
-        let duplicatedUser: User = await this.userRepository.findOneBy({
+    public checkDuplicatePhoneNumber = async(req: Request, res: Response, next: NextFunction) => {
+        let duplicatedUser: void | User | null = await this.userRepository.findOneBy({
             phone_number: req.body.phone_number,
         }).catch((err) => {
             return next(err)

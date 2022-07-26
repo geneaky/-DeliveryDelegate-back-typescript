@@ -5,7 +5,7 @@ import {Review} from "./review.model";
 export class Store {
 
     @PrimaryGeneratedColumn()
-    store_id: number
+    store_id: number;
 
     @Column()
     store_name: string
@@ -21,4 +21,5 @@ export class Store {
 
     @OneToMany(() => Review, (review) => review.store)
     review: Review[]
+
 }
