@@ -12,6 +12,16 @@ var UserController = (function () {
     }
     UserController.prototype.initializeRoutes = function () {
         var _this = this;
+        this.router.get('/test', function (req, res, next) {
+            console.time("=======test start=======");
+            _this.userService.getTestData(req, res, next);
+            console.timeEnd("=======test end========");
+        });
+        this.router.get('/test-redis', function (req, res, next) {
+            console.time("========test start=========");
+            _this.userService.getTestDataByRedis(req, res, next);
+            console.timeEnd("========test end===========");
+        });
         this.router.post('/register/existed', function (req, res, next) {
             _this.userService.checkDuplicatePhoneNumber(req, res, next);
         });

@@ -28,8 +28,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.App = void 0;
 var express_1 = __importDefault(require("express"));
+var game_1 = require("./controllers/game");
+var map_1 = require("./controllers/map");
+var store_1 = require("./controllers/store");
 var users_1 = require("./controllers/users");
-var auth_1 = require("./middlewares/auth");
 var data_source_1 = require("./config/data-source");
 var dotenv = __importStar(require("dotenv"));
 dotenv.config();
@@ -61,7 +63,7 @@ var App = (function () {
     App.prototype.initializeControllers = function (controllers) {
         var _this = this;
         controllers.forEach(function (controller) {
-            _this.app.use("/", new auth_1.Auth().authenticate, controller.router);
+            _this.app.use("/", controller.router);
         });
     };
     App.prototype.initializeErrorHandling = function () {
@@ -76,5 +78,5 @@ var App = (function () {
     return App;
 }());
 exports.App = App;
-new App([new users_1.UserController()], 3000).listen();
+new App([new game_1.GameController(), new map_1.MapController(), new store_1.StoreController(), new users_1.UserController()], 3000).listen();
 //# sourceMappingURL=app.js.map

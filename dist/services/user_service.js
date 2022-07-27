@@ -67,11 +67,21 @@ var http_errors_1 = __importDefault(require("http-errors"));
 var crypto = __importStar(require("crypto"));
 var data_source_1 = require("../config/data-source");
 var user_model_1 = require("../models/user.model");
+var game_model_1 = require("../models/game.model");
+var order_model_1 = require("../models/order.model");
+var store_model_1 = require("../models/store.model");
+var review_model_1 = require("../models/review.model");
+var delegator_model_1 = require("../models/delegator.model");
 var jwt = require('../middlewares/jwt');
 var UserServiceImpl = (function () {
     function UserServiceImpl() {
         var _this = this;
         this.userRepository = data_source_1.AppDataSource.getRepository(user_model_1.User);
+        this.gameRepository = data_source_1.AppDataSource.getRepository(game_model_1.Game);
+        this.delegatorRepository = data_source_1.AppDataSource.getRepository(delegator_model_1.Delegator);
+        this.orderRepository = data_source_1.AppDataSource.getRepository(order_model_1.Order);
+        this.storeRepository = data_source_1.AppDataSource.getRepository(store_model_1.Store);
+        this.reviewRepository = data_source_1.AppDataSource.getRepository(review_model_1.Review);
         this.registerUser = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
             var existedUser, user;
             return __generator(this, function (_a) {
@@ -177,7 +187,25 @@ var UserServiceImpl = (function () {
                 }
             });
         }); };
+        this.getTestData = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var resultUser;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, this.userRepository.createQueryBuilder("user")
+                            .innerJoin("user.delegator", "delegator")
+                            .innerJoin("delegator.order", "order")
+                            .innerJoin("order.store_name", "store")
+                            .getOne()];
+                    case 1:
+                        resultUser = _a.sent();
+                        return [2, res.json({ result: resultUser })];
+                }
+            });
+        }); };
     }
+    UserServiceImpl.prototype.getTestDataByRedis = function (req, res, next) {
+        throw new Error("Method not implemented.");
+    };
     return UserServiceImpl;
 }());
 exports.UserServiceImpl = UserServiceImpl;

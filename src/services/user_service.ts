@@ -5,11 +5,21 @@ import {AppDataSource} from "../config/data-source";
 import {User} from "../models/user.model";
 import {Repository} from "typeorm";
 import {NextFunction, Request, Response} from "express";
+import {Game} from "../models/game.model";
+import {Order} from "../models/order.model";
+import {Store} from "../models/store.model";
+import {Review} from "../models/review.model";
+import {Delegator} from "../models/delegator.model";
 const jwt = require('../middlewares/jwt');
 
 export class UserServiceImpl implements UserService {
 
     userRepository: Repository<User> = AppDataSource.getRepository(User);
+    gameRepository: Repository<Game> = AppDataSource.getRepository(Game);
+    delegatorRepository: Repository<Delegator> = AppDataSource.getRepository(Delegator);
+    orderRepository: Repository<Order> = AppDataSource.getRepository(Order);
+    storeRepository: Repository<Store> = AppDataSource.getRepository(Store);
+    reviewRepository: Repository<Review> = AppDataSource.getRepository(Review);
 
     public registerUser = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -91,5 +101,33 @@ export class UserServiceImpl implements UserService {
         }
 
         return res.json({ message : 'not existed'})
+    }
+
+    /*
+    * 사용자가 대표로 지정된 주문의 주문정보에서 상점 정보를 통해 상점을 조회
+    * */
+    public getTestData = async (req: Request, res: Response, next: NextFunction) => {
+
+        let findUser = await this.userRepository.findOneBy({
+            user_id : 1
+        }).catch((err) => console.log(err))
+
+        let delegator = await this.delegatorRepository.findOneBy({
+            delegator_id:1
+        }).catch((err) => console.log(err))
+
+        let order = await this.orderRepository.findOneBy({
+            delegator : delegator as Delegator
+        }).catch((err) => console.log(err))
+
+        let store = await this.storeRepository.findOneBy({
+            store_name: order.store_name
+        }).catch((err) => console.log(err));
+
+        return res.json({ result: store});
+    }
+    public getTestDataByRedis(req: Request, res: Response, next: NextFunction): void {
+
+        throw new Error("Method not implemented.");
     }
 }

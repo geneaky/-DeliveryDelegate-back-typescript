@@ -13,6 +13,24 @@ export class UserController implements Controller{
   }
 
   private initializeRoutes() {
+
+    /*
+    * 사용자가 참여한 게임의 주문 정보와 일치하는 가게의 등록된 리뷰를 작성한 사용자의 동네 정보를 찾아 와라
+    * join  7번
+    * */
+
+    this.router.get('/test',(req, res, next) => {
+      console.time("=======test start=======")
+      this.userService.getTestData(req, res, next)
+      console.timeEnd("=======test end========");
+    })
+
+    this.router.get('/test-redis',(req, res, next) => {
+      console.time("========test start=========")
+      this.userService.getTestDataByRedis(req, res, next)
+      console.timeEnd("========test end===========")
+    })
+
     this.router.post('/register/existed', (req, res, next) => {
       this.userService.checkDuplicatePhoneNumber(req, res, next)
     })

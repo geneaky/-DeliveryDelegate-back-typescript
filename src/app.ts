@@ -47,7 +47,7 @@ export class App {
 
     private initializeControllers(controllers: Controller[]) {
         controllers.forEach((controller) => {
-            this.app.use("/",new Auth().authenticate, controller.router)
+            this.app.use("/", controller.router)
         })
     }
 
@@ -63,5 +63,4 @@ export class App {
     }
 }
 
-//new App([new GameController(), new MapController(), new StoreController(), new UserController()], 3000).listen();
-new App([new UserController()], 3000).listen();
+new App([new GameController(), new MapController(), new StoreController(), new UserController()], 3000).listen();
