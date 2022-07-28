@@ -10,39 +10,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Store = void 0;
-var typeorm_1 = require("typeorm");
-var review_model_1 = require("./review.model");
-var Store = (function () {
-    function Store() {
-    }
-    __decorate([
-        (0, typeorm_1.PrimaryGeneratedColumn)(),
-        __metadata("design:type", Number)
-    ], Store.prototype, "store_id", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Store.prototype, "store_name", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Store.prototype, "store_posx", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Store.prototype, "store_posy", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Store.prototype, "store_address", void 0);
-    __decorate([
-        (0, typeorm_1.OneToMany)(function () { return review_model_1.Review; }, function (review) { return review.store; }),
-        __metadata("design:type", Array)
-    ], Store.prototype, "review", void 0);
-    Store = __decorate([
-        (0, typeorm_1.Entity)()
-    ], Store);
-    return Store;
-}());
+const typeorm_1 = require("typeorm");
+const review_model_1 = require("./review.model");
+let Store = class Store {
+};
+__decorate([
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    __metadata("design:type", Number)
+], Store.prototype, "store_id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Store.prototype, "store_name", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Store.prototype, "store_posx", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Store.prototype, "store_posy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Store.prototype, "store_address", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => review_model_1.Review, (review) => review.store),
+    __metadata("design:type", Array)
+], Store.prototype, "review", void 0);
+Store = __decorate([
+    (0, typeorm_1.Entity)()
+], Store);
 exports.Store = Store;
 //# sourceMappingURL=store.model.js.map

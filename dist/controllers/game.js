@@ -24,25 +24,23 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameController = void 0;
-var express = __importStar(require("express"));
-var game_service_1 = require("../services/game_service");
-var GameController = (function () {
-    function GameController() {
+const express = __importStar(require("express"));
+const game_service_1 = require("../services/game_service");
+class GameController {
+    constructor() {
         this.path = "/games";
         this.router = express.Router();
         this.gameService = new game_service_1.GameServiceImpl();
         this.initializeRoutes();
     }
-    GameController.prototype.initializeRoutes = function () {
-        var _this = this;
-        this.router.post('/register', function (req, res, next) {
-            _this.gameService.createGame(req, res, next);
+    initializeRoutes() {
+        this.router.post('/register', (req, res, next) => {
+            this.gameService.createGame(req, res, next);
         });
-        this.router.get('/rooms', function (req, res, next) {
-            _this.gameService.findGames(req, res, next);
+        this.router.get('/rooms', (req, res, next) => {
+            this.gameService.findGames(req, res, next);
         });
-    };
-    return GameController;
-}());
+    }
+}
 exports.GameController = GameController;
 //# sourceMappingURL=game.js.map

@@ -10,38 +10,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Thumb = void 0;
-var typeorm_1 = require("typeorm");
-var user_model_1 = require("./user.model");
-var review_model_1 = require("./review.model");
-var Thumb = (function () {
-    function Thumb() {
-    }
-    __decorate([
-        (0, typeorm_1.PrimaryGeneratedColumn)(),
-        __metadata("design:type", Number)
-    ], Thumb.prototype, "thumb_id", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", Boolean)
-    ], Thumb.prototype, "thumb_up", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", Boolean)
-    ], Thumb.prototype, "thumb_down", void 0);
-    __decorate([
-        (0, typeorm_1.ManyToOne)(function () { return user_model_1.User; }, function (user) { return user.thumb; }),
-        (0, typeorm_1.JoinColumn)(),
-        __metadata("design:type", user_model_1.User)
-    ], Thumb.prototype, "user", void 0);
-    __decorate([
-        (0, typeorm_1.ManyToOne)(function () { return review_model_1.Review; }, function (review) { return review.thumb; }),
-        (0, typeorm_1.JoinColumn)(),
-        __metadata("design:type", review_model_1.Review)
-    ], Thumb.prototype, "review", void 0);
-    Thumb = __decorate([
-        (0, typeorm_1.Entity)()
-    ], Thumb);
-    return Thumb;
-}());
+const typeorm_1 = require("typeorm");
+const user_model_1 = require("./user.model");
+const review_model_1 = require("./review.model");
+let Thumb = class Thumb {
+};
+__decorate([
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    __metadata("design:type", Number)
+], Thumb.prototype, "thumb_id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Thumb.prototype, "thumb_up", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Thumb.prototype, "thumb_down", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => user_model_1.User, (user) => user.thumb),
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", user_model_1.User)
+], Thumb.prototype, "user", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => review_model_1.Review, (review) => review.thumb),
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", review_model_1.Review)
+], Thumb.prototype, "review", void 0);
+Thumb = __decorate([
+    (0, typeorm_1.Entity)()
+], Thumb);
 exports.Thumb = Thumb;
 //# sourceMappingURL=thumb.model.js.map

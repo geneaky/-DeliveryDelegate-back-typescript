@@ -10,57 +10,54 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
-var typeorm_1 = require("typeorm");
-var thumb_model_1 = require("./thumb.model");
-var delegator_model_1 = require("./delegator.model");
-var review_model_1 = require("./review.model");
-var User = (function () {
-    function User() {
-    }
-    __decorate([
-        (0, typeorm_1.PrimaryGeneratedColumn)(),
-        __metadata("design:type", Number)
-    ], User.prototype, "user_id", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], User.prototype, "phone_number", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], User.prototype, "password", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], User.prototype, "nickname", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], User.prototype, "self_posx", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], User.prototype, "self_posy", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", Number)
-    ], User.prototype, "exemption_count", void 0);
-    __decorate([
-        (0, typeorm_1.OneToMany)(function () { return thumb_model_1.Thumb; }, function (thumb) { return thumb.user; }),
-        __metadata("design:type", Array)
-    ], User.prototype, "thumb", void 0);
-    __decorate([
-        (0, typeorm_1.OneToMany)(function () { return delegator_model_1.Delegator; }, function (delegator) { return delegator.user; }),
-        __metadata("design:type", Array)
-    ], User.prototype, "delegator", void 0);
-    __decorate([
-        (0, typeorm_1.OneToMany)(function () { return review_model_1.Review; }, function (review) { return review.user; }),
-        __metadata("design:type", Array)
-    ], User.prototype, "review", void 0);
-    User = __decorate([
-        (0, typeorm_1.Entity)()
-    ], User);
-    return User;
-}());
+const typeorm_1 = require("typeorm");
+const thumb_model_1 = require("./thumb.model");
+const delegator_model_1 = require("./delegator.model");
+const review_model_1 = require("./review.model");
+let User = class User {
+};
+__decorate([
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    __metadata("design:type", Number)
+], User.prototype, "user_id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], User.prototype, "phone_number", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], User.prototype, "password", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], User.prototype, "nickname", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], User.prototype, "self_posx", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], User.prototype, "self_posy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], User.prototype, "exemption_count", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => thumb_model_1.Thumb, (thumb) => thumb.user),
+    __metadata("design:type", Array)
+], User.prototype, "thumb", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => delegator_model_1.Delegator, (delegator) => delegator.user),
+    __metadata("design:type", Array)
+], User.prototype, "delegator", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => review_model_1.Review, (review) => review.user),
+    __metadata("design:type", Array)
+], User.prototype, "review", void 0);
+User = __decorate([
+    (0, typeorm_1.Entity)()
+], User);
 exports.User = User;
 //# sourceMappingURL=user.model.js.map

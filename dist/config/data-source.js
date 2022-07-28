@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppDataSource = void 0;
-var typeorm_1 = require("typeorm");
-var delegator_model_1 = require("../models/delegator.model");
-var user_model_1 = require("../models/user.model");
-var game_model_1 = require("../models/game.model");
-var order_model_1 = require("../models/order.model");
-var reciept_model_1 = require("../models/reciept.model");
-var review_model_1 = require("../models/review.model");
-var store_model_1 = require("../models/store.model");
-var thumb_model_1 = require("../models/thumb.model");
+const typeorm_1 = require("typeorm");
+const delegator_model_1 = require("../models/delegator.model");
+const user_model_1 = require("../models/user.model");
+const game_model_1 = require("../models/game.model");
+const order_model_1 = require("../models/order.model");
+const reciept_model_1 = require("../models/reciept.model");
+const review_model_1 = require("../models/review.model");
+const store_model_1 = require("../models/store.model");
+const thumb_model_1 = require("../models/thumb.model");
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "mysql",
     host: "localhost",

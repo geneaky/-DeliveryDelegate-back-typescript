@@ -27,16 +27,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.App = void 0;
-var express_1 = __importDefault(require("express"));
-var game_1 = require("./controllers/game");
-var map_1 = require("./controllers/map");
-var store_1 = require("./controllers/store");
-var users_1 = require("./controllers/users");
-var data_source_1 = require("./config/data-source");
-var dotenv = __importStar(require("dotenv"));
+const express_1 = __importDefault(require("express"));
+const game_1 = require("./controllers/game");
+const map_1 = require("./controllers/map");
+const store_1 = require("./controllers/store");
+const users_1 = require("./controllers/users");
+const data_source_1 = require("./config/data-source");
+const dotenv = __importStar(require("dotenv"));
 dotenv.config();
-var App = (function () {
-    function App(controllers, port) {
+class App {
+    constructor(controllers, port) {
         this.app = (0, express_1.default)();
         this.port = port;
         this.initializeMiddlewares();
@@ -44,39 +44,37 @@ var App = (function () {
         this.initializeControllers(controllers);
         this.initializeErrorHandling();
     }
-    App.prototype.listen = function () {
-        this.app.listen(this.port, function () {
+    listen() {
+        this.app.listen(this.port, () => {
             console.log("server start");
         });
-    };
-    App.prototype.getServer = function () {
+    }
+    getServer() {
         return this.app;
-    };
-    App.prototype.connectToDatabase = function () {
+    }
+    connectToDatabase() {
         data_source_1.AppDataSource.initialize()
-            .then(function () {
+            .then(() => {
             console.log('db connected');
-        }).catch(function (error) {
+        }).catch((error) => {
             console.log(error);
         });
-    };
-    App.prototype.initializeControllers = function (controllers) {
-        var _this = this;
-        controllers.forEach(function (controller) {
-            _this.app.use("/", controller.router);
+    }
+    initializeControllers(controllers) {
+        controllers.forEach((controller) => {
+            this.app.use("/", controller.router);
         });
-    };
-    App.prototype.initializeErrorHandling = function () {
-        this.app.use(function (err, req, res, next) {
+    }
+    initializeErrorHandling() {
+        this.app.use((err, req, res, next) => {
             console.log(err.message);
             res.status(500).send(err.message);
         });
-    };
-    App.prototype.initializeMiddlewares = function () {
+    }
+    initializeMiddlewares() {
         this.app.use(express_1.default.json());
-    };
-    return App;
-}());
+    }
+}
 exports.App = App;
 new App([new game_1.GameController(), new map_1.MapController(), new store_1.StoreController(), new users_1.UserController()], 3000).listen();
 //# sourceMappingURL=app.js.map

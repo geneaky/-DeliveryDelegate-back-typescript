@@ -24,28 +24,26 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StoreController = void 0;
-var express = __importStar(require("express"));
-var store_service_1 = require("../services/store_service");
-var StoreController = (function () {
-    function StoreController() {
+const express = __importStar(require("express"));
+const store_service_1 = require("../services/store_service");
+class StoreController {
+    constructor() {
         this.path = "/store";
         this.router = express.Router();
         this.storeService = new store_service_1.StoreServiceImpl();
         this.initializeRoutes();
     }
-    StoreController.prototype.initializeRoutes = function () {
-        var _this = this;
-        this.router.get('/', function (req, res, next) {
-            _this.storeService.findStore(req, res, next);
+    initializeRoutes() {
+        this.router.get('/', (req, res, next) => {
+            this.storeService.findStore(req, res, next);
         });
-        this.router.post('/register', function (req, res, next) {
-            _this.storeService.registerStore(req, res, next);
+        this.router.post('/register', (req, res, next) => {
+            this.storeService.registerStore(req, res, next);
         });
-        this.router.get('/:id/reviews', function (req, res, next) {
-            _this.storeService.getReviews(req, res, next);
+        this.router.get('/:id/reviews', (req, res, next) => {
+            this.storeService.getReviews(req, res, next);
         });
-    };
-    return StoreController;
-}());
+    }
+}
 exports.StoreController = StoreController;
 //# sourceMappingURL=store.js.map

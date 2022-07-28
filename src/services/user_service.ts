@@ -10,7 +10,9 @@ import {Order} from "../models/order.model";
 import {Store} from "../models/store.model";
 import {Review} from "../models/review.model";
 import {Delegator} from "../models/delegator.model";
+import {RedisClientType, createClient} from 'redis';
 const jwt = require('../middlewares/jwt');
+
 
 export class UserServiceImpl implements UserService {
 
@@ -20,6 +22,7 @@ export class UserServiceImpl implements UserService {
     orderRepository: Repository<Order> = AppDataSource.getRepository(Order);
     storeRepository: Repository<Store> = AppDataSource.getRepository(Store);
     reviewRepository: Repository<Review> = AppDataSource.getRepository(Review);
+    redisClient: RedisClientType = createClient({ url:'redis://localhost:6379'});
 
     public registerUser = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -128,10 +131,22 @@ export class UserServiceImpl implements UserService {
             store_name: store_name
         }).catch((err) => console.log(err));
 
+        await this.redisClient.connect();
+        await this.redisClient.set("store", JSON.stringify(store)).catch((err) => {console.log(err)}).then(() => {
+            this.redisClient.quit();
+        })
         return res.json({ result: store});
     }
-    public getTestDataByRedis(req: Request, res: Response, next: NextFunction): void {
+    public getTestDataByRedis = async (req: Request, res: Response, next: NextFunction) => {
 
-        throw new Error("Method not implemented.");
+        await this.redisClient.connect();
+        let value = await this.redisClient.get("store").then((result) => {
+            this.redisClient.quit();
+            return result;
+        });
+
+        let store = JSON.parse(value);
+        return res.json({ result: store});
+        //5배 차이
     }
 }

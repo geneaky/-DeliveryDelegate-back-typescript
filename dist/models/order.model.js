@@ -10,40 +10,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Order = void 0;
-var typeorm_1 = require("typeorm");
-var delegator_model_1 = require("./delegator.model");
-var Order = (function () {
-    function Order() {
-    }
-    __decorate([
-        (0, typeorm_1.PrimaryGeneratedColumn)(),
-        __metadata("design:type", Number)
-    ], Order.prototype, "order_id", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Order.prototype, "store_name", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Order.prototype, "mapx", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Order.prototype, "mapy", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Order.prototype, "detail", void 0);
-    __decorate([
-        (0, typeorm_1.ManyToOne)(function () { return delegator_model_1.Delegator; }, function (delegator) { return delegator.order; }),
-        (0, typeorm_1.JoinColumn)(),
-        __metadata("design:type", delegator_model_1.Delegator)
-    ], Order.prototype, "delegator", void 0);
-    Order = __decorate([
-        (0, typeorm_1.Entity)()
-    ], Order);
-    return Order;
-}());
+const typeorm_1 = require("typeorm");
+const delegator_model_1 = require("./delegator.model");
+let Order = class Order {
+};
+__decorate([
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    __metadata("design:type", Number)
+], Order.prototype, "order_id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Order.prototype, "store_name", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Order.prototype, "mapx", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Order.prototype, "mapy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Order.prototype, "detail", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => delegator_model_1.Delegator, (delegator) => delegator.order),
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", delegator_model_1.Delegator)
+], Order.prototype, "delegator", void 0);
+Order = __decorate([
+    (0, typeorm_1.Entity)()
+], Order);
 exports.Order = Order;
 //# sourceMappingURL=order.model.js.map
