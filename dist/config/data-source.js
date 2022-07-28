@@ -18,6 +18,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     password: "root",
     database: "daldaepyo",
     synchronize: true,
+    migrationsRun: true,
     logging: true,
     entities: [user_model_1.User, game_model_1.Game, order_model_1.Order, reciept_model_1.Reciept, review_model_1.Review, store_model_1.Store, thumb_model_1.Thumb, delegator_model_1.Delegator],
     subscribers: [],

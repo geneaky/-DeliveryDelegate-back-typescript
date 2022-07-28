@@ -20,6 +20,10 @@ var Reciept = (function () {
         __metadata("design:type", Number)
     ], Reciept.prototype, "reciept_id", void 0);
     __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], Reciept.prototype, "anything", void 0);
+    __decorate([
         (0, typeorm_1.OneToMany)(function () { return review_model_1.Review; }, function (review) { return review.reciept; }),
         (0, typeorm_1.JoinColumn)(),
         __metadata("design:type", Array)

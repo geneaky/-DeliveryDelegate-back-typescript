@@ -120,8 +120,12 @@ export class UserServiceImpl implements UserService {
             delegator : delegator as Delegator
         }).catch((err) => console.log(err))
 
+        let store_name: string;
+        if(order) {
+            store_name = order.store_name;
+        }
         let store = await this.storeRepository.findOneBy({
-            store_name: order.store_name
+            store_name: store_name
         }).catch((err) => console.log(err));
 
         return res.json({ result: store});

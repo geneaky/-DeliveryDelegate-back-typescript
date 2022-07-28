@@ -188,17 +188,33 @@ var UserServiceImpl = (function () {
             });
         }); };
         this.getTestData = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var resultUser;
+            var findUser, delegator, order, store_name, store;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.userRepository.createQueryBuilder("user")
-                            .innerJoin("user.delegator", "delegator")
-                            .innerJoin("delegator.order", "order")
-                            .innerJoin("order.store_name", "store")
-                            .getOne()];
+                    case 0: return [4, this.userRepository.findOneBy({
+                            user_id: 1
+                        }).catch(function (err) { return console.log(err); })];
                     case 1:
-                        resultUser = _a.sent();
-                        return [2, res.json({ result: resultUser })];
+                        findUser = _a.sent();
+                        return [4, this.delegatorRepository.findOneBy({
+                                delegator_id: 1
+                            }).catch(function (err) { return console.log(err); })];
+                    case 2:
+                        delegator = _a.sent();
+                        return [4, this.orderRepository.findOneBy({
+                                delegator: delegator
+                            }).catch(function (err) { return console.log(err); })];
+                    case 3:
+                        order = _a.sent();
+                        if (order) {
+                            store_name = order.store_name;
+                        }
+                        return [4, this.storeRepository.findOneBy({
+                                store_name: store_name
+                            }).catch(function (err) { return console.log(err); })];
+                    case 4:
+                        store = _a.sent();
+                        return [2, res.json({ result: store })];
                 }
             });
         }); };
