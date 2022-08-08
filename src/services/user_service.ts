@@ -10,7 +10,7 @@ import {Order} from "../models/order.model";
 import {Store} from "../models/store.model";
 import {Review} from "../models/review.model";
 import {Delegator} from "../models/delegator.model";
-import {RedisClientType, createClient} from 'redis';
+import {RedisSource as redisClient} from "../config/redis-source";
 const jwt = require('../middlewares/jwt');
 
 
@@ -22,7 +22,6 @@ export class UserServiceImpl implements UserService {
     orderRepository: Repository<Order> = AppDataSource.getRepository(Order);
     storeRepository: Repository<Store> = AppDataSource.getRepository(Store);
     reviewRepository: Repository<Review> = AppDataSource.getRepository(Review);
-    redisClient: RedisClientType = createClient({ url:'redis://localhost:6379'});
 
     public registerUser = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -131,17 +130,12 @@ export class UserServiceImpl implements UserService {
             store_name: store_name
         }).catch((err) => console.log(err));
 
-        await this.redisClient.connect();
-        await this.redisClient.set("store", JSON.stringify(store)).catch((err) => {console.log(err)}).then(() => {
-            this.redisClient.quit();
-        })
+        await redisClient.set("store", JSON.stringify(store)).catch((err) => {console.log(err)})
         return res.json({ result: store});
     }
     public getTestDataByRedis = async (req: Request, res: Response, next: NextFunction) => {
 
-        await this.redisClient.connect();
-        let value = await this.redisClient.get("store").then((result) => {
-            this.redisClient.quit();
+        let value = await redisClient.get("store").then((result) => {
             return result;
         });
 

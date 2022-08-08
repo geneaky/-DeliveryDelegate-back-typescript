@@ -14,8 +14,8 @@ config:
 
 scenarios:
   - flow:
-      - get:
-          url: "/test"
+#      - get:
+#          url: "/test"
 
       - get:
           url: "/test-redis"

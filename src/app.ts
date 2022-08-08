@@ -7,6 +7,8 @@ import {UserController} from "./controllers/users";
 import {Auth} from "./middlewares/auth";
 import {AppDataSource} from "./config/data-source";
 import * as dotenv from 'dotenv'
+import {createClient, RedisClientType} from "redis";
+import {RedisSource} from "./config/redis-source";
 
 
 dotenv.config();
@@ -14,6 +16,8 @@ dotenv.config();
 export class App {
     public app : Express;
     public port: number
+    public redisClient: RedisClientType = createClient({ url:'redis://localhost:6379'});
+
 
     constructor(controllers: Controller[], port: number) {
         this.app = express();
@@ -21,6 +25,7 @@ export class App {
 
         this.initializeMiddlewares();
         this.connectToDatabase();
+        this.connectToRedis();
         this.initializeControllers(controllers)
         this.initializeErrorHandling()
     }
@@ -43,6 +48,10 @@ export class App {
             }).catch((error) => {
             console.log(error)
         })
+    }
+
+    private connectToRedis() {
+        RedisSource.connect()
     }
 
     private initializeControllers(controllers: Controller[]) {
