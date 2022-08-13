@@ -14,10 +14,6 @@ export class UserController implements Controller{
 
   private initializeRoutes() {
 
-    /*
-    * 요구사항 : 사용자가 참여한 게임의 주문 정보와 일치하는 가게의 정보를 반환해라
-    */
-
     this.router.get('/test',(req, res, next) => {
       this.userService.getTestData(req, res, next)
     })
